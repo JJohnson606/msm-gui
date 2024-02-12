@@ -7,20 +7,20 @@
 </a>
 
 <div>
-  <a href="/delete_movie/">
+  <a href="/delete_movie/<%= @the_movie.id %> ">
     Delete movie
   </a>
 </div>
 
 <hr>
 
-<form action="/modify_movie/" method="post">
+<form action="/modify_movie/<%= @the_movie.id %>" method="post">
   <div>
     <label for="title_box">
       Title
     </label>
-
-    <input type="text" id="title_box" name="query_title" value="">
+   
+    <input type="text" id="title_box" name="query_title" value="<%= @the_movie.title %>">
   </div>
 
   <div>
@@ -28,7 +28,7 @@
       Year
     </label>
 
-    <input type="text" id="year_box" name="query_year" value="">
+    <input type="text" id="year_box" name="query_year" value="<%= @the_movie.year %>">
   </div>
 
   <div>
@@ -36,7 +36,7 @@
       Duration
     </label>
 
-    <input type="text" id="duration_box" name="query_duration" value="">
+    <input type="text" id="duration_box" name="query_duration" value="<%= @the_movie.duration %>">
   </div>
 
   <div>
@@ -44,7 +44,7 @@
       Description
     </label>
 
-    <textarea id="description_box" name="query_description" rows="3">.</textarea>
+    <textarea id="description_box" name="query_description" value = "<%= @the_movie.description %>" rows="3">.</textarea>
   </div>
 
   <div>
@@ -52,7 +52,7 @@
       Image
     </label>
 
-    <input type="text" id="image_box" name="query_image" value="">
+    <input type="text" id="image_box" name="query_image" value="<%= @the_movie.image%>">
   </div>
 
   <div>
@@ -60,7 +60,7 @@
       Director ID
     </label>
 
-    <input type="text" id="director_id_box" name="query_director_id" value="">
+    <input type="text" id="director_id_box" name="query_director_id" value="<%= @the_movie.director_id %>">
   </div>
 
   <button type = "submit">
@@ -111,6 +111,7 @@
     Director
   </dt>
   <dd>
+   <%if @the_movie.director_id != nil %>
     <% dir_id = @the_movie.director_id %>
     
     <% matching_directors = Director.where({ :id => dir_id }) %>
@@ -118,6 +119,7 @@
     <% the_director = matching_directors.at(0) %>
 
     <%= the_director.name %>
+    <%end%>
   </dd>
 
   <dt>

@@ -8,6 +8,53 @@
 
 <hr>
 
+<div>
+  <a href="/delete_actor/<%= @the_actor.id %>">
+    Delete actor
+  </a>
+</div>
+
+<hr>
+
+<form action="/modify_actor/<%= @the_actor.id %>" method="post">
+  <div>
+    <label for="name_box">
+      Name
+    </label>
+
+    <input type="text" id="name_box" name="query_name" value="<%= @the_actor.name %>">
+  </div>
+
+  <div>
+    <label for="dob_box">
+      Dob
+    </label>
+
+    <input type="date" id="dob_box" name="query_dob" value="<%= @the_actor.dob %>">
+  </div>
+
+  <div>
+    <label for="bio_box">
+      Bio
+    </label>
+
+    <textarea id="bio_box" name="query_bio" value = "<%= @the_actor.bio %>"rows="3"></textarea>
+  </div>
+
+  <div>
+    <label for="image_box">
+      Image
+    </label>
+
+    <input type="text" id="image_box" name="query_image" value="<%= @the_actor.image %>">
+  </div>
+
+  <button>
+    Update actor
+  </button>
+</form>
+<hr>
+
 <dl>
   <dt>
     Name
@@ -88,7 +135,7 @@
     <% matching_movies = Movie.where({ :id => m_id }) %>
 
     <% the_movie = matching_movies.at(0) %>
-
+     <% if the_movie != nil%>
     <tr>
       <td>
         <%= the_movie.title %>
@@ -116,6 +163,7 @@
         <a href="/movies/<%= the_movie.id %>">
           Show details
         </a>
+        <%end%>
       </td>
     </tr>
   <% end %>

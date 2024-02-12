@@ -1,10 +1,10 @@
 class MoviesController < ApplicationController
+  
   def index
-    matching_movies = Movie.all
-    @list_of_movies = matching_movies.order({ :created_at => :desc })
-
+    @list_of_movies = Movie.all.order({:created_at => :desc})
     render({ :template => "movie_templates/index" })
   end
+
 
   def show
     the_id = params.fetch("path_id")
@@ -38,29 +38,33 @@ class MoviesController < ApplicationController
   
   def update
     the_id = params.fetch("path_id")
-    @movie_new = Movie.where({ :id => the_id }).at(0)
+    movie_new = Movie.where({ :id => the_id }).at(0)
 
-    @movie_new.title = params.fetch("query_title")
-    @movie_new.year = params.fetch("query_year")
-    @movie_new.duration = params.fetch("query_duration")
-    @movie_new.description = params.fetch("query_description")
-    @movie_new.image = params.fetch("query_image")
-    @movie_new.director_id = params.fetch("query_director_id")
+    movie_new.title = params.fetch("query_title")
+    movie_new.year = params.fetch("query_year")
+    movie_new.duration = params.fetch("query_duration")
+    movie_new.description = params.fetch("query_description")
+    movie_new.image = params.fetch("query_image")
+    movie_new.director_id = params.fetch("query_director_id")
 
-    if @movie_new.valid?
-      @movie_new.save
-      redirect_to("/movies/#{@movie_new.director_id}", { :notice => "Course updated successfully."} )
+    if movie_new.valid?
+      movie_new.save
+      redirect_to("/movies/#{the_id}", { :notice => "Movie updated successfully."} )
     else
-      redirect_to("/movies/#{@movie_new.director_id}", { :alert => "Course failed to update successfully." })
+      redirect_to("/movies/#{the_id}",{ :alert => "Movie failed to update successfully." })
     end
   end
-
+ 
   def destroy
     the_id = params.fetch("path_id")
-    @movie = Movie.where({ :id => the_id }).at(0)
-
-    @movie.destroy
-
-    redirect_to("/movies", { :notice => "Movie deleted successfully."} )
+    delete_movie = Movie.where({ :id => the_id }).at(0)
+    
+    if delete_movie.destroy
+      redirect_to("/movies", notice: "Movie deleted successfully.")
+    else
+      redirect_to("/movies", alert: "Failed to delete movie.")
+    end
   end
+  
+
 end

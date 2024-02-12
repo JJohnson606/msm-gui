@@ -107,8 +107,15 @@
       <% matching_directors = Director.where({ :id => a_movie.director_id }) %>
       
       <% the_director = matching_directors.at(0) %>
+ 
+      <% if the_director == nil%>
+        We were not able to find the director.
+       
+       <% else %>
 
       <%= the_director.name %>
+
+      <% end %>
     </td>
 
     <td>
